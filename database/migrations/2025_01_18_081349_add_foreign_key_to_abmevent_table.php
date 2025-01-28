@@ -6,24 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up() 
-    { 
+    public function up()
+    {
         Schema::table('abmevent', function (Blueprint $table) {
-            $table->unsignedInteger('admin_id')->nullable();
-            $table->foreign('admin_id')->references('admin_id')->on('admin')->onDelete('cascade');
+            // Add foreign key for admin_id
+            $table->foreign('admin_id')
+                ->references('admin_id')
+                ->on('admin')
+                ->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::table('abmevent', function (Blueprint $table) {
-            //
+            $table->dropForeign(['admin_id']);
         });
     }
 };

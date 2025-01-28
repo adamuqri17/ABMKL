@@ -6,23 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::table('application', function (Blueprint $table) {
-            $table->foreign('member_id')->references('member_id')->on('member')->onDelete('cascade');
+            // Modify member_id to be nullable
+            $table->integer('member_id')->unsigned()->nullable()->change();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::table('application', function (Blueprint $table) {
-            //
+            // Revert back to non-nullable
+            $table->integer('member_id')->unsigned()->nullable(false)->change();
         });
     }
 };
